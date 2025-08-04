@@ -1,0 +1,69 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_PREFIX: mozyonee/creonix # change username
+
+jobs:
+  build-and-push:
+    runs-on: Linux
+    permissions:
+      contents: read
+      packages: write
+    
+    strategy:
+      matrix:
+        service: [bot, client, server, templates]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.CR_PAT }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./${{ matrix.service }}
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-${{ matrix.service }}:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-${{ matrix.service }}:${{ github.sha }}
+
+  update-gitops:
+    needs: build-and-push
+    runs-on: Linux
+    
+    steps:
+      - name: Checkout GitOps repository
+        uses: actions/checkout@v4
+        with:
+          repository: mozyonee/creonix-mvp-deployment # change username & repo
+          token: ${{ secrets.GITOPS_PAT }}
+          path: gitops
+
+      - name: Update image tags
+        working-directory: gitops
+        run: |
+          for service in client server templates; do
+            # Update the tag field for each service
+            sed -i "/images:/,/^[^ ]/ { /^  ${service}:/,/^  [^ ]/ { s/tag: .*/tag: ${{ github.sha }}/g } }" "./values.yaml"
+          done
+
+      - name: Commit and push
+        working-directory: gitops
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Update images to ${{ github.sha }}" || exit 0
+          git push
