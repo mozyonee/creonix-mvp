@@ -46,7 +46,7 @@
 /server/build
 /server/cache
 /server/assets/library
-/server/assets/templates
+/server/assets/microservice
 
 /server/# Logs
 /server/logs
@@ -109,60 +109,60 @@
 /bot/bot/__pycache__
 
 # compiled output
-/templates/dist
-/templates/node_modules
-/templates/build
+/microservice/dist
+/microservice/node_modules
+/microservice/build
 
 # Logs
-/templates/logs
-/templates/*.log
-/templates/npm-debug.log*
-/templates/pnpm-debug.log*
-/templates/yarn-debug.log*
-/templates/yarn-error.log*
-/templates/lerna-debug.log*
+/microservice/logs
+/microservice/*.log
+/microservice/npm-debug.log*
+/microservice/pnpm-debug.log*
+/microservice/yarn-debug.log*
+/microservice/yarn-error.log*
+/microservice/lerna-debug.log*
 
 # OS
-/templates/.DS_Store
+/microservice/.DS_Store
 
 # Tests
-/templates/coverage
-/templates/.nyc_output
+/microservice/coverage
+/microservice/.nyc_output
 
 # IDEs and editors
-/templates/.idea
-/templates/.project
-/templates/.classpath
-/templates/.c9/
-/templates/*.launch
-/templates/.settings/
-/templates/*.sublime-workspace
+/microservice/.idea
+/microservice/.project
+/microservice/.classpath
+/microservice/.c9/
+/microservice/*.launch
+/microservice/.settings/
+/microservice/*.sublime-workspace
 
 # IDE - VSCode
-/templates/.vscode/*
-/templates/!.vscode/settings.json
-/templates/!.vscode/tasks.json
-/templates/!.vscode/launch.json
-/templates/!.vscode/extensions.json
+/microservice/.vscode/*
+/microservice/!.vscode/settings.json
+/microservice/!.vscode/tasks.json
+/microservice/!.vscode/launch.json
+/microservice/!.vscode/extensions.json
 
 # dotenv environment variable files
-/templates/.env
-/templates/.env.development.local
-/templates/.env.test.local
-/templates/.env.production.local
-/templates/.env.local
+/microservice/.env
+/microservice/.env.development.local
+/microservice/.env.test.local
+/microservice/.env.production.local
+/microservice/.env.local
 
 # temp directory
-/templates/.temp
-/templates/.tmp
+/microservice/.temp
+/microservice/.tmp
 
 # Runtime data
-/templates/pids
-/templates/*.pid
-/templates/*.seed
-/templates/*.pid.lock
+/microservice/pids
+/microservice/*.pid
+/microservice/*.seed
+/microservice/*.pid.lock
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
-/templates/report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+/microservice/report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 **/.env
