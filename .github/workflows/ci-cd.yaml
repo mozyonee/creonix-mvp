@@ -17,7 +17,7 @@ jobs:
     
     strategy:
       matrix:
-        service: [bot, client, server, templates]
+        service: [bot, client, server, microservice]
     
     steps:
       - name: Checkout code
@@ -54,7 +54,7 @@ jobs:
       - name: Update image tags
         working-directory: gitops
         run: |
-          for service in client server templates; do
+          for service in client server microservice; do
             # Update the tag field for each service
             sed -i "/images:/,/^[^ ]/ { /^  ${service}:/,/^  [^ ]/ { s/tag: .*/tag: ${{ github.sha }}/g } }" "./values.yaml"
           done
