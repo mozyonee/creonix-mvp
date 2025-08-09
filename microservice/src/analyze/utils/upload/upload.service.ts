@@ -32,7 +32,7 @@ export class UploadService {
 
 		try {
 			// Use spawn to execute the process with high priority
-			const child = spawn(aeExecutable, ['-noui', '-r', scriptPath], {
+			const child = spawn(aeExecutable, ['-m', '-noui', '-r', scriptPath], {
 				cwd: path.dirname(aeExecutable),
 				stdio: ['ignore', 'pipe', 'pipe'], // Configure stdio for capturing output
 			});
